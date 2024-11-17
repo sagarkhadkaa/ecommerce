@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-// import styles from './ImageGallery.module.scss';
 import styles from './ImageGallary.module.scss';
 
 interface ImageGalleryProps {
