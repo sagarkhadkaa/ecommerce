@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useRef } from 'react';
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'; // Importing left and right arrow icons
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import Image from 'next/image';
 import styles from './ImageGallary.module.scss';
 
 interface ImageGalleryProps {
@@ -9,10 +10,9 @@ interface ImageGalleryProps {
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // Mouse position
-  const [zooming, setZooming] = useState(false); // State to track zooming status
-  const imageRef = useRef<HTMLImageElement | null>(null); // Ref to the image for zooming effect
-
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [zooming, setZooming] = useState(false);
+  const imageRef = useRef<HTMLDivElement | null>(null);
   const handlePrev = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
@@ -55,38 +55,40 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           onMouseLeave={handleMouseLeave}
           ref={imageRef}
         >
-          <img ref={imageRef} src={images[currentImageIndex]} alt='Product' />
+          <Image
+            src={images[currentImageIndex]}
+            alt='Product'
+            layout='intrinsic'
+            width={600}
+            height={600}
+          />
         </div>
         <button onClick={handleNext} className={styles.navButtonNext}>
           <AiOutlineRight size={30} />
         </button>
       </div>
+
       {zooming && imageRef.current && (
         <div
           className={styles.zoomPanel}
           style={{
             position: 'absolute',
-            left: `${mousePos.x}px`, // Position the zoom area near the mouse
-            top: `${mousePos.y}px`, // Position the zoom area near the mouse
+            left: `${mousePos.x}px`,
+            top: `${mousePos.y}px`,
             zIndex: '300',
           }}
         >
-          <img
+          <Image
             src={images[currentImageIndex]}
             alt='Zoomed'
+            layout='intrinsic'
+            width={200}
+            height={200}
             style={{
-              transform: `scale(6)`, // Zoom in the image
+              transform: `scale(5)`,
               transformOrigin: `${
-                imageRef.current
-                  ? (mousePos.x / imageRef.current.clientWidth) * 100
-                  : 0
-              }% ${
-                imageRef.current
-                  ? (mousePos.y / imageRef.current.clientHeight) * 100
-                  : 0
-              }%`,
-              width: '200px',
-              height: '200px',
+                (mousePos.x / imageRef.current.clientWidth) * 100
+              }% ${(mousePos.y / imageRef.current.clientHeight) * 100}%`,
             }}
           />
         </div>
@@ -94,13 +96,16 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 
       <div className={styles.thumbnails}>
         {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Thumbnail ${index}`}
-            onClick={() => setCurrentImageIndex(index)}
-            className={currentImageIndex === index ? styles.active : ''}
-          />
+          <div key={index} className={styles.thumbnailWrapper}>
+            <Image
+              src={image}
+              alt={`Thumbnail ${index}`}
+              onClick={() => setCurrentImageIndex(index)}
+              width={100}
+              height={100}
+              className={currentImageIndex === index ? styles.active : ''}
+            />
+          </div>
         ))}
       </div>
     </div>
