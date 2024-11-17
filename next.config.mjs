@@ -8,6 +8,18 @@ const nextConfig = {
   assetPrefix: isProd ? '/ecommerce/' : '',
   basePath: isProd ? '/ecommerce' : '',
   output: 'export',
+  webpack(config, { isServer }) {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+      };
+    }
+    return config;
+  },
+
+  devIndicators: {
+    autoPrerender: false,
+  },
 };
 
 export default nextConfig;
