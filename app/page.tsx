@@ -2,6 +2,7 @@
 
 import ImageGallery from './components/ImageGallery';
 import Navbar from './components/Navbar';
+import ProductDescription from './components/ProductDescription';
 
 const images = [
   '/images/image4.jpg',
@@ -18,7 +19,10 @@ export default function HomePage() {
       <Navbar />
       <div className='content'>
         <h1>Product Gallery</h1>
-        <ImageGallery images={images} />
+        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <ImageGallery images={images} />
+          <ProductDescription />
+        </div>
       </div>
     </div>
   );
