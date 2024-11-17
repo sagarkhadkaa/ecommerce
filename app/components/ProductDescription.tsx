@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ProductDescription.module.scss';
 
 const descriptions = [
@@ -12,12 +12,14 @@ const descriptions = [
   'This unique product provides the perfect balance of performance and aesthetics.',
 ];
 
-const getRandomDescription = () => {
-  const randomIndex = Math.floor(Math.random() * descriptions.length);
-  return descriptions[randomIndex];
-};
-
 const ProductDescription: React.FC = () => {
+  const [description, setDescription] = useState<string>('');
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * descriptions.length);
+    setDescription(descriptions[randomIndex]);
+  }, []);
+
   const handleAddToCart = () => {
     alert('Product added to cart!');
   };
@@ -25,7 +27,7 @@ const ProductDescription: React.FC = () => {
   return (
     <div className={styles.productDescription}>
       <h2>Product Description</h2>
-      <p>{getRandomDescription()}</p>
+      <p>{description || 'Loading description...'}</p>{' '}
       <button className={styles.addToCartBtn} onClick={handleAddToCart}>
         Add to Cart
       </button>
