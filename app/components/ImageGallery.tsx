@@ -11,8 +11,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // Mouse position
   const [zooming, setZooming] = useState(false); // State to track zooming status
-  const imageRef = useRef<HTMLImageElement>(null); // Ref to the image for zooming effect
-  const zoomRef = useRef<HTMLDivElement>(null); // Ref to zoomed container
+  const imageRef = useRef<HTMLImageElement | null>(null); // Ref to the image for zooming effect
 
   const handlePrev = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -28,8 +27,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (imageRef.current) {
-      const { top, left, width, height } =
-        imageRef.current.getBoundingClientRect();
+      const { top, left } = imageRef.current.getBoundingClientRect();
       const x = e.clientX - left;
       const y = e.clientY - top;
       setMousePos({ x, y });
@@ -63,7 +61,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           <AiOutlineRight size={30} />
         </button>
       </div>
-      {zooming && (
+      {zooming && imageRef.current && (
         <div
           className={styles.zoomPanel}
           style={{
@@ -79,8 +77,14 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             style={{
               transform: `scale(6)`, // Zoom in the image
               transformOrigin: `${
-                (mousePos.x / imageRef.current?.clientWidth) * 100
-              }% ${(mousePos.y / imageRef.current?.clientHeight) * 100}%`,
+                imageRef.current
+                  ? (mousePos.x / imageRef.current.clientWidth) * 100
+                  : 0
+              }% ${
+                imageRef.current
+                  ? (mousePos.y / imageRef.current.clientHeight) * 100
+                  : 0
+              }%`,
               width: '200px',
               height: '200px',
             }}
