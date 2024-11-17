@@ -58,35 +58,35 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           ref={imageRef}
         >
           <img ref={imageRef} src={images[currentImageIndex]} alt='Product' />
-          {zooming && (
-            <div
-              className={styles.zoomPanel}
-              style={{
-                position: 'absolute',
-                left: `${mousePos.x + 40}px`, // Position the zoom area near the mouse
-                // top: `${mousePos.y + 50}px`, // Position the zoom area near the mouse
-                zIndex: '300',
-              }}
-            >
-              <img
-                src={images[currentImageIndex]}
-                alt='Zoomed'
-                style={{
-                  transform: `scale(4)`, // Zoom in the image
-                  transformOrigin: `${
-                    (mousePos.x / imageRef.current?.clientWidth) * 100
-                  }% ${(mousePos.y / imageRef.current?.clientHeight) * 100}%`,
-                  width: '200px',
-                  height: '200px',
-                }}
-              />
-            </div>
-          )}
         </div>
         <button onClick={handleNext} className={styles.navButtonNext}>
           <AiOutlineRight size={30} />
         </button>
       </div>
+      {zooming && (
+        <div
+          className={styles.zoomPanel}
+          style={{
+            position: 'absolute',
+            left: `${mousePos.x}px`, // Position the zoom area near the mouse
+            top: `${mousePos.y}px`, // Position the zoom area near the mouse
+            zIndex: '300',
+          }}
+        >
+          <img
+            src={images[currentImageIndex]}
+            alt='Zoomed'
+            style={{
+              transform: `scale(6)`, // Zoom in the image
+              transformOrigin: `${
+                (mousePos.x / imageRef.current?.clientWidth) * 100
+              }% ${(mousePos.y / imageRef.current?.clientHeight) * 100}%`,
+              width: '200px',
+              height: '200px',
+            }}
+          />
+        </div>
+      )}
 
       <div className={styles.thumbnails}>
         {images.map((image, index) => (

@@ -46,11 +46,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     z-index: 1;
-    display: block; /* Make the zoom panel visible */
+    display: block;
+    z-index: 99999;
   }
 
   .zoomPanel img {
-    width: 200px; /* Twice the size of the zoom container */
+    width: 200px;
     height: 200px;
     transform: scale(4); /* Zoom in the image */
     object-fit: cover;
