@@ -1,11 +1,12 @@
 const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
   },
-  assetPrefix: isProd ? '/your-repository-name/' : '',
-  basePath: isProd ? '/your-repository-name' : '',
+  assetPrefix: isProd ? '/ecommerce/' : '',
+  basePath: isProd ? '/ecommerce' : '',
   output: 'export',
 };
 
