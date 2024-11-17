@@ -1,6 +1,7 @@
 'use client';
 
 import ImageGallery from './components/ImageGallery';
+import Navbar from './components/Navbar';
 
 const images = [
   '/images/image1.jpg',
@@ -14,8 +15,11 @@ const images = [
 export default function HomePage() {
   return (
     <div>
-      <h1>Product Gallery</h1>
-      <ImageGallery images={images} />
+      <Navbar />
+      <div className='content'>
+        <h1>Product Gallery</h1>
+        <ImageGallery images={images} />
+      </div>
     </div>
   );
 }
