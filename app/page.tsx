@@ -3,7 +3,7 @@
 import ImageGallery from './components/ImageGallery';
 import Navbar from './components/Navbar';
 import ProductDescription from './components/ProductDescription';
-import './styles/globals.css';
+import './styles/main.css';
 
 const isProd = process.env.NODE_ENV === 'production';
 
